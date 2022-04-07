@@ -15,39 +15,32 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>Create an account</title>
-
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 </head>
 <body>
 	<div class="container">
-
     <form:form method="POST" modelAttribute="userForm" class="form-signin">
-        <h2 class="form-signin-heading">Create your account</h2>
+        <h2 class="form-signin-heading">Create your account</h2> 
         
         <spring:bind path="firstName">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="firstName" class="form-control" placeholder="First name"
-                            autofocus="true"></form:input>
+                <form:input type="text" path="firstName" class="form-control" placeholder="First name" autofocus="true"></form:input>
                 <form:errors path="firstName"></form:errors>
             </div>
         </spring:bind>
         
-          <spring:bind path="lastName">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="lastName" class="form-control" placeholder="Last name"
-                            autofocus="true"></form:input>
+        <spring:bind path="lastName">
+          	<div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="lastName" class="form-control" placeholder="Last name" autofocus="true"></form:input>
                 <form:errors path="lastName"></form:errors>
             </div>
         </spring:bind>
         
-        
         <spring:bind path="email">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="email" class="form-control" placeholder="Email"
-                            autofocus="true"></form:input>
+                <form:input type="text" path="email" class="form-control" placeholder="Email" autofocus="true"></form:input>
                 <form:errors path="email"></form:errors>
             </div>
         </spring:bind>
@@ -68,8 +61,7 @@
 
         <spring:bind path="passwordConfirm">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="password" path="passwordConfirm" class="form-control"
-                            placeholder="Confirm your password"></form:input>
+                <form:input type="password" path="passwordConfirm" class="form-control" placeholder="Confirm your password"></form:input>
                 <form:errors path="passwordConfirm"></form:errors>
             </div>
         </spring:bind>
@@ -78,8 +70,9 @@
     </form:form>
 
 </div>
-<!-- /container -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 </body>
 </html>
