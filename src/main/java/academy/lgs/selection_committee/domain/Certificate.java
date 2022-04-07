@@ -1,21 +1,36 @@
 package academy.lgs.selection_committee.domain;
 
-import java.util.Map;
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "certificate")
 public class Certificate {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	private Map<Subject,Integer> certificate;
+	private Subjects subject;
+	private Grades grade;
 	private Integer userId;
-	
-	public Certificate(Integer id, Map<Subject, Integer> certificate) {
+
+	public Certificate(Integer id, Subjects subject, Grades grade, Integer userId) {
 		this.id = id;
-		this.certificate = certificate;
+		this.subject = subject;
+		this.grade = grade;
+		this.userId = userId;
 	}
 
-	public Certificate(Map<Subject, Integer> certificate) {
-		this.certificate = certificate;
+	public Certificate(Subjects subject, Grades grade, Integer userId) {
+		super();
+		this.subject = subject;
+		this.grade = grade;
+		this.userId = userId;
 	}
 
 	public Certificate() {
@@ -29,14 +44,6 @@ public class Certificate {
 		this.id = id;
 	}
 
-	public Map<Subject, Integer> getCertificate() {
-		return certificate;
-	}
-
-	public void setCertificate(Map<Subject, Integer> certificate) {
-		this.certificate = certificate;
-	}
-
 	public Integer getUserId() {
 		return userId;
 	}
@@ -45,9 +52,25 @@ public class Certificate {
 		this.userId = userId;
 	}
 
+	public Subjects getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subjects subject) {
+		this.subject = subject;
+	}
+
+	public Grades getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Grades grade) {
+		this.grade = grade;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(certificate, id);
+		return Objects.hash(grade, id, subject, userId);
 	}
 
 	@Override
@@ -59,12 +82,13 @@ public class Certificate {
 		if (getClass() != obj.getClass())
 			return false;
 		Certificate other = (Certificate) obj;
-		return Objects.equals(certificate, other.certificate) && Objects.equals(id, other.id);
+		return grade == other.grade && Objects.equals(id, other.id) && subject == other.subject
+				&& Objects.equals(userId, other.userId);
 	}
 
 	@Override
 	public String toString() {
-		return "Certificate [id=" + id + ", certificate=" + certificate + "]";
+		return "Certificate [id=" + id + ", userId=" + userId + "]";
 	}
 	
 }

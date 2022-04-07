@@ -1,42 +1,35 @@
 package academy.lgs.selection_committee.domain;
 
 import java.util.Objects;
-import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "statmens")
 public class Statment {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	private Set<User> users;
+	private Integer userId;
 	private Integer facultyId;
 	
-	public Statment(Integer id, Set<User> users, Integer facultyId) {
+	public Statment(Integer id, Integer userId, Integer facultyId) {
 		this.id = id;
-		this.users = users;
+		this.userId = userId;
 		this.facultyId = facultyId;
 	}
 
-	public Statment(Set<User> users, Integer facultyId) {
-		this.users = users;
+	public Statment(Integer userId, Integer facultyId) {
+		this.userId = userId;
 		this.facultyId = facultyId;
 	}
 
 	public Statment() {
-	}
-
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-
-	public Integer getFacultyId() {
-		return facultyId;
-	}
-
-	public void setFacultyId(Integer facultyId) {
-		this.facultyId = facultyId;
 	}
 
 	public Integer getId() {
@@ -47,9 +40,25 @@ public class Statment {
 		this.id = id;
 	}
 
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Integer getFacultyId() {
+		return facultyId;
+	}
+
+	public void setFacultyId(Integer facultyId) {
+		this.facultyId = facultyId;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(facultyId, id, users);
+		return Objects.hash(facultyId, id, userId);
 	}
 
 	@Override
@@ -62,12 +71,14 @@ public class Statment {
 			return false;
 		Statment other = (Statment) obj;
 		return Objects.equals(facultyId, other.facultyId) && Objects.equals(id, other.id)
-				&& Objects.equals(users, other.users);
+				&& Objects.equals(userId, other.userId);
 	}
 
 	@Override
 	public String toString() {
-		return "Statment [id=" + id + ", users=" + users + ", facultyId=" + facultyId + "]";
-	}	
+		return "Statment [id=" + id + ", userId=" + userId + ", facultyId=" + facultyId + "]";
+	}
+	
+	
 	
 }
