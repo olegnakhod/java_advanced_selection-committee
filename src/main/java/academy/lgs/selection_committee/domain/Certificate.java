@@ -3,9 +3,14 @@ package academy.lgs.selection_committee.domain;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,25 +20,26 @@ public class Certificate {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	
+	@Enumerated(EnumType.STRING)
 	private Subjects subject;
+	
+	@Enumerated(EnumType.STRING)
 	private Grades grade;
-	private Integer userId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
 
-	public Certificate(Integer id, Subjects subject, Grades grade, Integer userId) {
+	public Certificate(Integer id, Subjects subject, Grades grade) {
 		this.id = id;
 		this.subject = subject;
 		this.grade = grade;
-		this.userId = userId;
 	}
 
-	public Certificate(Subjects subject, Grades grade, Integer userId) {
-		super();
+	public Certificate(Subjects subject, Grades grade) {
 		this.subject = subject;
 		this.grade = grade;
-		this.userId = userId;
-	}
-
-	public Certificate() {
 	}
 
 	public Integer getId() {
@@ -42,14 +48,6 @@ public class Certificate {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
 	}
 
 	public Subjects getSubject() {
@@ -70,7 +68,7 @@ public class Certificate {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(grade, id, subject, userId);
+		return Objects.hash(grade, id, subject);
 	}
 
 	@Override
@@ -82,13 +80,11 @@ public class Certificate {
 		if (getClass() != obj.getClass())
 			return false;
 		Certificate other = (Certificate) obj;
-		return grade == other.grade && Objects.equals(id, other.id) && subject == other.subject
-				&& Objects.equals(userId, other.userId);
+		return grade == other.grade && Objects.equals(id, other.id) && subject == other.subject;
 	}
 
 	@Override
 	public String toString() {
-		return "Certificate [id=" + id + ", userId=" + userId + "]";
-	}
-	
+		return "Certificate [id=" + id + ", subject=" + subject + ", grade=" + grade + "]";
+	}	
 }

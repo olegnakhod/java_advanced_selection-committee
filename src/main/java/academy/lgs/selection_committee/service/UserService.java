@@ -1,5 +1,7 @@
 package academy.lgs.selection_committee.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,5 +24,16 @@ public class UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPasswordConfirm()));
         user.setUserRole(UserRole.APPLICANT);
         userRepository.save(user);
+    }
+    
+    
+    
+    public User findByEmail(String email) {
+    	User user = null;
+    	Optional<User> findByEmail = userRepository.findByEmail(email);
+    	if(findByEmail.isPresent()) {
+    		user = findByEmail.get();
+    	}
+    	return user;
     }
 }

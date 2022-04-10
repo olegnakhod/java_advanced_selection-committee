@@ -31,10 +31,11 @@ public class UserController {
 
 	        if (bindingResult.hasErrors()) {
 	            return "registration";
-	        }
+	        }else if(userService.findByEmail(userForm.getEmail()) != null) {
+	        	return "registration";
+	        }else {
 	        userService.save(userForm);
-
-
+	        }
 	        return "redirect:/home";
 	    }
 

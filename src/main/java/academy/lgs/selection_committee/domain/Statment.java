@@ -1,11 +1,15 @@
 package academy.lgs.selection_committee.domain;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,20 +19,15 @@ public class Statment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	private Integer userId;
-	private Integer facultyId;
 	
-	public Statment(Integer id, Integer userId, Integer facultyId) {
+	@OneToMany(mappedBy = "statments", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Faculty> facultyes = new HashSet<>();
+
+	public Statment(Integer id, Set<Faculty> facultyes) {
 		this.id = id;
-		this.userId = userId;
-		this.facultyId = facultyId;
+		this.facultyes = facultyes;
 	}
-
-	public Statment(Integer userId, Integer facultyId) {
-		this.userId = userId;
-		this.facultyId = facultyId;
-	}
-
+	
 	public Statment() {
 	}
 
@@ -40,25 +39,17 @@ public class Statment {
 		this.id = id;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public Set<Faculty> getFacultyes() {
+		return facultyes;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public Integer getFacultyId() {
-		return facultyId;
-	}
-
-	public void setFacultyId(Integer facultyId) {
-		this.facultyId = facultyId;
+	public void setFacultyes(Set<Faculty> facultyes) {
+		this.facultyes = facultyes;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(facultyId, id, userId);
+		return Objects.hash(facultyes, id);
 	}
 
 	@Override
@@ -70,15 +61,12 @@ public class Statment {
 		if (getClass() != obj.getClass())
 			return false;
 		Statment other = (Statment) obj;
-		return Objects.equals(facultyId, other.facultyId) && Objects.equals(id, other.id)
-				&& Objects.equals(userId, other.userId);
+		return Objects.equals(facultyes, other.facultyes) && Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return "Statment [id=" + id + ", userId=" + userId + ", facultyId=" + facultyId + "]";
+		return "Statment [id=" + id + ", facultyes=" + facultyes + "]";
 	}
-	
-	
 	
 }

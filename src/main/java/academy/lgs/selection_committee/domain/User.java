@@ -1,14 +1,21 @@
 package academy.lgs.selection_committee.domain;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,7 +30,7 @@ public class User {
 	private String lastName;
 	@Column
 	private Integer age;
-	@Column
+	@Column(unique=true)
 	private String email;
 	@Column
 	private String password;
@@ -32,7 +39,13 @@ public class User {
 	
 	@Enumerated(EnumType.STRING)
 	private UserRole userRole;
-	private Integer certificateId;
+	
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Certificate> certificates = new HashSet<>();
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "faculty_id", referencedColumnName = "id")
+	private Faculty facultyes;
 	
 	public User(User user) {
 		this.id = user.id;
@@ -47,7 +60,6 @@ public class User {
 
 	public User(Integer id, String firstName, String lastName, Integer age, String email, String password,
 			String passwordConfirm, UserRole userRole) {
-		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -60,7 +72,6 @@ public class User {
 
 	public User(String firstName, String lastName, Integer age, String email, String password, String passwordConfirm,
 			UserRole userRole) {
-		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
@@ -113,14 +124,6 @@ public class User {
 		this.userRole = userRole;
 	}
 
-	public Integer getCertificateId() {
-		return certificateId;
-	}
-
-	public void setCertificateId(Integer certificateId) {
-		this.certificateId = certificateId;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -143,6 +146,14 @@ public class User {
 
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
+	}
+	
+	public Set<Certificate> getCertificates() {
+		return certificates;
+	}
+
+	public void setCertificates(Set<Certificate> certificates) {
+		this.certificates = certificates;
 	}
 
 	@Override
