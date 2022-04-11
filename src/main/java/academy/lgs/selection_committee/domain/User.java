@@ -9,12 +9,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,23 +30,16 @@ public class User {
 	private String lastName;
 	@Column
 	private Integer age;
-	@Column(unique=true)
+	@Column(unique = true)
 	private String email;
 	@Column
 	private String password;
 	@Column(name = "password_confirm")
 	private String passwordConfirm;
-	
+
 	@Enumerated(EnumType.STRING)
 	private UserRole userRole;
-	
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Certificate> certificates = new HashSet<>();
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "faculty_id", referencedColumnName = "id")
-	private Faculty facultyes;
-	
+
 	public User(User user) {
 		this.id = user.id;
 		this.firstName = user.firstName;
@@ -147,15 +140,8 @@ public class User {
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
 	}
+
 	
-	public Set<Certificate> getCertificates() {
-		return certificates;
-	}
-
-	public void setCertificates(Set<Certificate> certificates) {
-		this.certificates = certificates;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(age, email, firstName, id, lastName, password, userRole);

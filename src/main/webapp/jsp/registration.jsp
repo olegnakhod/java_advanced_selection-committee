@@ -16,63 +16,62 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Create an account</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link href="${contextPath}/resources/css/bootstrap.min.css"	rel="stylesheet">
 </head>
 <body>
-	<div class="container">
-    <form:form method="POST" modelAttribute="userForm" class="form-signin">
+	<div class="w3-container w3-panel w3-border w3-round-large w3-border-green" style ="margin: auto; margin-top: 10%; width: 20%; hight: 30%">
+    <form:form method="POST" modelAttribute="userForm" >
         <h2 class="form-signin-heading">Create your account</h2> 
         
         <spring:bind path="firstName">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="firstName" class="form-control" placeholder="First name" autofocus="true"></form:input>
+            <div class="${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="firstName" placeholder="First name" autofocus="true" class="w3-input w3-border w3-round-large w3-hover-border-green" style ="margin-top: 10%;"></form:input>
                 <form:errors path="firstName"></form:errors>
             </div>
         </spring:bind>
         
         <spring:bind path="lastName">
-          	<div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="lastName" class="form-control" placeholder="Last name" autofocus="true"></form:input>
+          	<div class="${status.error ? 'has-error' : ''} ">
+                <form:input type="text" path="lastName" placeholder="Last name" autofocus="true" class="w3-input w3-border w3-round-large w3-hover-border-green" style ="margin-top: 10%;"></form:input>
                 <form:errors path="lastName"></form:errors>
             </div>
         </spring:bind>
         
         <spring:bind path="email">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="email" class="form-control" placeholder="Email" autofocus="true"></form:input>
+            <div class="${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="email"  placeholder="Email" autofocus="true" class="w3-input w3-border w3-round-large w3-hover-border-green" style ="margin-top: 10%;"></form:input>
                 <form:errors path="email"></form:errors>
             </div>
         </spring:bind>
         
          <spring:bind path="age">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="number" path="age" class="form-control" placeholder="Age"></form:input>
+            <div class="${status.error ? 'has-error' : ''}">
+                <form:input type="number" path="age" placeholder="Age" class="w3-input w3-border w3-round-large w3-hover-border-green" style ="margin-top: 10%;"></form:input>
                 <form:errors path="password"></form:errors>
             </div>
         </spring:bind>
 
         <spring:bind path="password">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>
+            <div class="${status.error ? 'has-error' : ''}">
+                <form:input type="password" path="password"  placeholder="Password" class="w3-input w3-border w3-round-large w3-hover-border-green" style ="margin-top: 10%;"></form:input>
                 <form:errors path="password"></form:errors>
             </div>
         </spring:bind>
 
         <spring:bind path="passwordConfirm">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="password" path="passwordConfirm" class="form-control" placeholder="Confirm your password"></form:input>
+            <div class="${status.error ? 'has-error' : ''}">
+                <form:input type="password" path="passwordConfirm" placeholder="Confirm your password" class="w3-input w3-border w3-round-large w3-hover-border-green" style ="margin-top: 10%;"></form:input>
                 <form:errors path="passwordConfirm"></form:errors>
             </div>
         </spring:bind>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+        <button  type="submit" class="w3-button w3-green w3-round-xxlarge" style ="margin-top: 5%;margin-bottom: 5%">Submit</button>
     </form:form>
 
 </div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-	<script	src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>

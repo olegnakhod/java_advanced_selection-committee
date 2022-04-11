@@ -11,8 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "sertificate")
-public class Certificate {
+@Table(name = "candidates_in_faculty")
+public class FacultyIncludCandidates {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,21 +23,21 @@ public class Certificate {
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn(name = "subject_id", referencedColumnName = "id")
-	private Subject subject;
+	@JoinColumn(name = "facultyr_id", referencedColumnName = "id")
+	private Faculty faculty;
 
-	public Certificate(Integer id, User user, Subject subject) {
+	public FacultyIncludCandidates(Integer id, User user, Faculty faculty) {
 		this.id = id;
 		this.user = user;
-		this.subject = subject;
+		this.faculty = faculty;
 	}
 
-	public Certificate(User user, Subject subject) {
+	public FacultyIncludCandidates(User user, Faculty faculty) {
 		this.user = user;
-		this.subject = subject;
+		this.faculty = faculty;
 	}
 
-	public Certificate() {
+	public FacultyIncludCandidates() {
 	}
 
 	public Integer getId() {
@@ -56,17 +56,17 @@ public class Certificate {
 		this.user = user;
 	}
 
-	public Subject getSubject() {
-		return subject;
+	public Faculty getFaculty() {
+		return faculty;
 	}
 
-	public void setSubject(Subject subject) {
-		this.subject = subject;
+	public void setFaculty(Faculty faculty) {
+		this.faculty = faculty;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, subject, user);
+		return Objects.hash(faculty, id, user);
 	}
 
 	@Override
@@ -77,13 +77,14 @@ public class Certificate {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Certificate other = (Certificate) obj;
-		return Objects.equals(id, other.id) && Objects.equals(subject, other.subject)
+		FacultyIncludCandidates other = (FacultyIncludCandidates) obj;
+		return Objects.equals(faculty, other.faculty) && Objects.equals(id, other.id)
 				&& Objects.equals(user, other.user);
 	}
 
 	@Override
 	public String toString() {
-		return "Certificate [id=" + id + ", user=" + user + ", subject=" + subject + "]";
+		return "UsersInFaculty [id=" + id + ", user=" + user + ", faculty=" + faculty + "]";
 	}
+
 }

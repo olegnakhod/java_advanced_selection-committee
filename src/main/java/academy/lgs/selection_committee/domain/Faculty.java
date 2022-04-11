@@ -1,10 +1,8 @@
 package academy.lgs.selection_committee.domain;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,8 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -30,12 +29,12 @@ public class Faculty {
 	@Column(name = "number_of_seats")
 	private Integer numberOfSeats;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "statment_id", referencedColumnName = "id")
-	private Statment statments;
+	@ManyToMany
+	@JoinTable(name = "facultyes_statments",joinColumns = @JoinColumn(name = "faculty_id"), inverseJoinColumns = @JoinColumn(name = "statment_id"))
+	private Set<Statment> statments;
 	
-	@OneToMany(mappedBy = "facultyes", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<User> users = new HashSet<>();
+	@ManyToMany
+	private Set<User> users;
 	
 	public Faculty(Integer id, String name, Integer numberOfSeats) {
 		this.id = id;

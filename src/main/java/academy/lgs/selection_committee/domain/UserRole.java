@@ -1,5 +1,5 @@
 package academy.lgs.selection_committee.domain;
 
 public enum UserRole {
-	APPLICANT,ADMINISTRATOR;
+	ROLE_CANDIDATE,ROLE_ADMINISTRATOR;
 }
