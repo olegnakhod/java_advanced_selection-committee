@@ -3,6 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
@@ -18,11 +19,19 @@
 		<!-- Sidebar -->
 		<div class="w3-sidebar w3-light-grey w3-bar-block" style="width: 10%">
 			<h3 class="w3-bar-item">Menu</h3>
+			
 			<a href="/home" class="w3-bar-item w3-button">Home</a>
-			<a href="/addFaculty" class="w3-bar-item w3-button">Add Faculty</a>
+			
+			<security:authorize access="hasRole('ROLE_CANDIDATE')">
 			<a href="/applyToFaculty" class="w3-bar-item w3-button">Apply to faculty</a>
-			<a href="/viewCandidateInFaculty" class="w3-bar-item w3-button">Statment</a>
 			<a href="/addCertificate" class="w3-bar-item w3-button">Add/update certificate</a>
+			</security:authorize>
+			
+			<security:authorize access="hasRole('ROLE_ADMINISTRATOR')">
+			<a href="/addFaculty" class="w3-bar-item w3-button">Add Faculty</a>
+			<a href="/viewCandidateInFaculty" class="w3-bar-item w3-button">Statment</a>
+			</security:authorize>
+			
 			<c:if test="${pageContext.request.userPrincipal.name != null}">
 				<form id="logoutForm" method="POST" action="${contextPath}/logout">
 					<input type="hidden" name="${_csrf.parameterName}"
