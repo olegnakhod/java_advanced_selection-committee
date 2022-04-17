@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import academy.lgs.selection_committee.domain.User;
+import academy.lgs.selection_committee.domain.UserRole;
 import academy.lgs.selection_committee.service.CertificateService;
-import academy.lgs.selection_committee.service.FacultyService;
-import academy.lgs.selection_committee.service.SubjectsGradesService;
 import academy.lgs.selection_committee.service.UserService;
 
 @Controller
@@ -19,9 +18,6 @@ public class ProfileController {
 	
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private SubjectsGradesService subjectService;
 	
 	@Autowired
 	private CertificateService certificateService;
@@ -35,7 +31,11 @@ public class ProfileController {
 	public ModelAndView viewProfile() {
 		ModelAndView map = new ModelAndView("home");
 		map.addObject("userViewer",  getCurrentUser());
-		map.addObject( "subjectsViewer", certificateService.getByUserId(getCurrentUser().getId()).getSubject());
+		
+		if( getCurrentUser().getUserRole().equals(UserRole.ROLE_CANDIDATE)){
+			map.addObject( "subjectsViewer", certificateService.getByUserId(getCurrentUser().getId()).getSubject());
+		}
+		
 		return map;
 	}
 }

@@ -2,7 +2,6 @@ package academy.lgs.selection_committee.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,7 +47,7 @@ public class StatmentController {
 	@RequestMapping(value = "/applyToFaculty", method = RequestMethod.GET)
 	private ModelAndView getFaculty() {
 		ModelAndView map = new ModelAndView("applyToFaculty");
-		map.addObject("facultyes", facultyService.readAllFaculties());
+		map.addObject("facultyes", facultyService.getAll());
 		return map;
 	}
 
