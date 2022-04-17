@@ -22,9 +22,9 @@
 			<h3 class="w3-bar-item">Menu</h3>
 			<a href="/home" class="w3-bar-item w3-button">Home</a>
 			<a href="/addFaculty" class="w3-bar-item w3-button">Add Faculty</a>
-			<a href="/applyToFaculty" class="w3-bar-item w3-button">Apply faculty</a>
-			<a href="/viewCandidateInFaculty" class="w3-bar-item w3-button">Candidate in faculty</a>
-			<a href="/addCertificate" class="w3-bar-item w3-button">Add certificate</a>
+			<a href="/applyToFaculty" class="w3-bar-item w3-button">Apply to faculty</a>
+			<a href="/viewCandidateInFaculty" class="w3-bar-item w3-button">Statment</a>
+			<a href="/addCertificate" class="w3-bar-item w3-button">Add/update certificate</a>
 			<c:if test="${pageContext.request.userPrincipal.name != null}">
 				<form id="logoutForm" method="POST" action="${contextPath}/logout">
 					<input type="hidden" name="${_csrf.parameterName}"
