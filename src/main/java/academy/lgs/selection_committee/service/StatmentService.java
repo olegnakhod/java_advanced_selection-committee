@@ -14,14 +14,14 @@ public class StatmentService {
 	@Autowired
 	private StatmentRepository statmentRepository;
 	
-	public List<Statment> getAllByFacultyId(Integer facultyId){
-		return statmentRepository.getAllByFacultyId(facultyId);
-	}
-	
 	public List<Statment> getAll(){
 		return statmentRepository.findAll();
 	}
 	
+	public List<Statment> getAllByFacultyId(Integer facultyId){
+		return statmentRepository.getAllByFacultyId(facultyId);
+	}
+		
 	public List<Statment> getAllByUserId(Integer userId){
 		return statmentRepository.getAllByUserId(userId);
 	}

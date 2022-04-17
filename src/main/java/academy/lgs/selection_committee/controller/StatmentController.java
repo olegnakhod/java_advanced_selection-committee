@@ -2,6 +2,7 @@ package academy.lgs.selection_committee.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,13 +60,14 @@ public class StatmentController {
 		User user =  getCurrentUser();
 		Faculty faculty = facultyService.getFacultyById(facultyId);
 		Certificate certificate = certificateService.getByUserId(user.getId());
-		List<Statment> statments = statmentService.getAllByUserId(user.getId());
+		
+		boolean findCreateStatmentForUser = statmentService.getAllByUserId(user.getId()).stream().filter(x->x.getFaculty().getId().equals(faculty.getId())).findFirst().isEmpty();
 		
 		statment.setFaculty(faculty);
 		statment.setUser(user);
 
 		if(certificate.getSubject().getTotalGrades() > faculty.getMinimumPassingScore() & 
-			statments.size() == 0) {
+				findCreateStatmentForUser) {
 			
 			statmentService.add(statment);
 		}
