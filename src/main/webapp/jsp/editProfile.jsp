@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -23,86 +23,115 @@
 <body>
 	<div class = "w3-container">
 	<!-- Sidebar -->
-		<div class="w3-sidebar w3-light-grey w3-bar-block" style="width: 10%">
-			<h3 class="w3-bar-item">Menu</h3>
-			
-			<a href="/home" class="w3-bar-item w3-button">Home</a>
-			
-			<security:authorize access="hasRole('ROLE_CANDIDATE')">
-			<a href="/applyToFaculty" class="w3-bar-item w3-button">Apply to faculty</a>
-			<a href="/addCertificate" class="w3-bar-item w3-button">Add/update certificate</a>
-			</security:authorize>
-			
-			<security:authorize access="hasRole('ROLE_ADMINISTRATOR')">
-			<a href="/addFaculty" class="w3-bar-item w3-button">Add Faculty</a>
-			<a href="/viewCandidateInFaculty" class="w3-bar-item w3-button">Statment</a>
-			</security:authorize>
-			
-			<c:if test="${pageContext.request.userPrincipal.name != null}">
-				<form id="logoutForm" method="POST" action="${contextPath}/logout">
-					<input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}" />
-				</form>
-					<a onclick="document.forms['logoutForm'].submit()" class="w3-bar-item w3-button">Logout</a>
+	<div class="w3-sidebar w3-light-grey w3-bar-block" style="width: 10%">
+		<h3 class="w3-bar-item"><spring:message code='sidebar.menu' /></h3>
 
-			</c:if>
+		<a href="/home" class="w3-bar-item w3-button"><spring:message code='sidebar.home' /></a>
+
+		<security:authorize access="hasRole('ROLE_CANDIDATE')">
+			<a href="/applyToFaculty" class="w3-bar-item w3-button"><spring:message code='sidebar.apply' /></a>
+			<a href="/addCertificate" class="w3-bar-item w3-button"><spring:message code='sidebar.addCrtificate' /></a>
+		</security:authorize>
+
+		<security:authorize access="hasRole('ROLE_ADMINISTRATOR')">
+			<a href="/addFaculty" class="w3-bar-item w3-button"><spring:message code='sidebar.addFaculty' /></a>
+			<a href="/viewCandidateInFaculty" class="w3-bar-item w3-button"><spring:message code='sidebar.statment' /></a>
+		</security:authorize>
+
+		<c:if test="${pageContext.request.userPrincipal.name != null}">
+			<form id="logoutForm" method="POST" action="${contextPath}/logout">
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}" />
+			</form>
+			<a onclick="document.forms['logoutForm'].submit()"
+				class="w3-bar-item w3-button"><spring:message code='sidebar.logout' /></a>
+
+		</c:if>
+		<div>
+			<fieldset>
+				<label><spring:message code='login.choose_language' /></label> <select
+					id="locales">
+					<option value="en"><spring:message code='login.english' /></option>
+					<option value="ua"><spring:message code='login.ukrainian' /></option>
+
+				</select>
+			</fieldset>
 		</div>
+	</div>
 		<!-- Page Content -->
 		<div class="w3-container" style="margin-left: 10%;  width: 100% ;hight: 100%">
 			<!-- Header -->
 			<div class="w3-container w3-teal">
-				<h1>Edit profile</h1>
+				<h1><spring:message code='edit.header' /></h1>
 			</div>
 			
 		<!-- Body -->
 		<div class="w3-container w3-panel w3-border w3-round-large w3-border-green" style ="margin: auto; margin-top: 10%; width: 25%; hight: 30%">
-		<form:form method="POST" action="${contextPath}/changeUser" enctype="form-data">
+				<form:form method="POST" action="${contextPath}/changeUser"
+					enctype="form-data">
 					<table>
-						<tr style ="margin-top: 10%;">
-							<td>First name</td>
-							<td><input type="text" name="firstName" class="w3-input w3-border w3-round-large w3-hover-border-green"/></td>
+						<tr style="margin-top: 10%;">
+							<td><input type="text" name="firstName"
+								placeholder="<spring:message code='edit.firsName' />"
+								class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
 						</tr>
-						<tr style ="margin-top: 10%;">
-							<td>Last name</td>
-							<td><input type="text" name="lastName" class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
+						<tr style="margin-top: 10%;">
+
+							<td><input type="text" name="lastName"
+								placeholder="<spring:message code='edit.lastName'/>"
+								class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
 						</tr>
-						<tr style ="margin-top: 10%;">
-							<td>Age</td>
-							<td><input type="number" name="age" class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
+						<tr style="margin-top: 10%;">
+							<td><input type="number" name="age"
+								placeholder="<spring:message code='edit.age'/>"
+								class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
 						</tr>
-						<tr style ="margin-top: 10%;">
-							<td>			
-							<button type="submit" class="w3-button w3-green w3-round-xxlarge" style ="margin-top: 5%;margin-bottom: 5%">Submit</button>
+						<tr style="margin-top: 10%;">
+							<td>
+								<button type="submit"
+									class="w3-button w3-green w3-round-xxlarge"
+									style="margin-top: 5%; margin-bottom: 5%">
+									<spring:message code='edit.update' />
+								</button>
 							</td>
 						</tr>
 					</table>
 				</form:form>
-			<form:form method="POST" action="${contextPath}/changeFoto" enctype="multipart/form-data">
+				<form:form method="POST" action="${contextPath}/changeFoto" enctype="multipart/form-data">
 					<table>
 						<tr>
-							<td>Add foto</td>
-							<td><input type="file" name="image" style ="margin-top: 10%;"/></td>
+							<td><input type="file" name="image" style="margin-top: 10%;" /></td>
 						</tr>
-						<tr style ="margin-top: 10%;">
-							<td>			
-							<button type="submit" class="w3-button w3-green w3-round-xxlarge" style ="margin-top: 5%;margin-bottom: 5%">Submit</button>
+						<tr style="margin-top: 10%;">
+							<td>
+								<button type="submit"
+									class="w3-button w3-green w3-round-xxlarge"
+									style="margin-top: 5%; margin-bottom: 5%">
+									<spring:message code='edit.update' />
+								</button>
 							</td>
 						</tr>
 					</table>
 				</form:form>
 				<form:form method="POST" action="${contextPath}/changePassword" enctype="form-data">
 					<table>
-						<tr style ="margin-top: 10%;">
-							<td>Password</td>
-							<td><input type="text" name="password" class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
+						<tr style="margin-top: 10%;">
+							<td><input type="text" name="password"
+								placeholder="<spring:message code='edit.password'/>"
+								class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
 						</tr>
-						<tr style ="margin-top: 10%;">
-							<td>Password confirm</td>
-							<td><input type="text" name="passwordConfirm" class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
+						<tr style="margin-top: 10%;">
+							<td><input type="text" name="passwordConfirm"
+								placeholder="<spring:message code='edit.passwordConf'/>"
+								class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
 						</tr>
-						<tr style ="margin-top: 10%;">
-							<td>			
-							<button type="submit" class="w3-button w3-green w3-round-xxlarge" style ="margin-top: 5%;margin-bottom: 5%">Submit</button>
+						<tr style="margin-top: 10%;">
+							<td>
+								<button type="submit"
+									class="w3-button w3-green w3-round-xxlarge"
+									style="margin-top: 5%; margin-bottom: 5%">
+									<spring:message code='edit.update' />
+								</button>
 							</td>
 						</tr>
 					</table>
@@ -111,5 +140,9 @@
 			<!-- Body -->
 		</div>
 	</div>
+	<script	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="js/main.js"></script>
 </body>
 </html>
