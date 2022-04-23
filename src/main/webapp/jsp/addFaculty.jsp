@@ -12,81 +12,83 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Create faculty</title>
-<link href="${contextPath}/resources/css/bootstrap.min.css"
-	rel="stylesheet">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/profile.css" />
 </head>
 <body>
-	<!-- Sidebar -->
-	<div class="w3-sidebar w3-light-grey w3-bar-block" style="width: 10%">
-		<h3 class="w3-bar-item"><spring:message code='sidebar.menu' /></h3>
+	<div class="wrapper">
+		<!-- Sidebar  -->
+		<jsp:include page="sidebar.jsp"></jsp:include>
+		<!-- Content  -->
+		<div id="content" class="d-flex">
+			<!-- Header  -->
+			<nav
+				class="navbar navbar-expand-lg navbar-light bg-secondary fixed-top">
+				<div class="container-fluid">
+					<security:authorize access="hasRole('ROLE_ADMINISTRATOR')">
+						<button type="button" id="sidebarCollapse" class="btn btn-info">
+							<i class="fas fa-align-left"></i> <span>Toggle Sidebar</span>
+						</button>
+						<button class="btn btn-dark d-inline-block d-lg-none ml-auto"
+							type="button" data-toggle="collapse"
+							data-target="#navbarSupportedContent"
+							aria-controls="navbarSupportedContent" aria-expanded="false"
+							aria-label="Toggle navigation">
+							<i class="fas fa-align-justify"></i>
+						</button>
+					</security:authorize>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="nav navbar-nav ml-auto">
+							<li class="nav-item"><a href="/home"
+								class=" btn btn-outline-info"><spring:message
+										code='sidebar.home' /></a></li>
+							<li class="nav-item"><c:if
+									test="${pageContext.request.userPrincipal.name != null}">
+									<form id="logoutForm" method="POST"
+										action="${contextPath}/logout">
+										<input type="hidden" name="${_csrf.parameterName}"
+											value="${_csrf.token}" />
+									</form>
+									<a onclick="document.forms['logoutForm'].submit()"
+										class="btn btn-info ml-2"><spring:message
+											code='sidebar.logout' /></a>
 
-		<a href="/home" class="w3-bar-item w3-button"><spring:message code='sidebar.home' /></a>
+								</c:if></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
 
-		<security:authorize access="hasRole('ROLE_CANDIDATE')">
-			<a href="/applyToFaculty" class="w3-bar-item w3-button"><spring:message code='sidebar.apply' /></a>
-			<a href="/addCertificate" class="w3-bar-item w3-button"><spring:message code='sidebar.addCrtificate' /></a>
-		</security:authorize>
 
-		<security:authorize access="hasRole('ROLE_ADMINISTRATOR')">
-			<a href="/addFaculty" class="w3-bar-item w3-button"><spring:message code='sidebar.addFaculty' /></a>
-			<a href="/viewCandidateInFaculty" class="w3-bar-item w3-button"><spring:message code='sidebar.statment' /></a>
-		</security:authorize>
-
-		<c:if test="${pageContext.request.userPrincipal.name != null}">
-			<form id="logoutForm" method="POST" action="${contextPath}/logout">
-				<input type="hidden" name="${_csrf.parameterName}"
-					value="${_csrf.token}" />
-			</form>
-			<a onclick="document.forms['logoutForm'].submit()"
-				class="w3-bar-item w3-button"><spring:message code='sidebar.logout' /></a>
-
-		</c:if>
-		<div>
-			<fieldset>
-				<label><spring:message code='login.choose_language' /></label> <select
-					id="locales">
-					<option value="en"><spring:message code='login.english' /></option>
-					<option value="ua"><spring:message code='login.ukrainian' /></option>
-
-				</select>
-			</fieldset>
+			<!-- Body -->
+			<div
+				class="container d-flex justify-content-center align-self-center">
+				<div
+					class="container d-flex flex-column bg-white shadow rounded overflow-hidden pt-5 pb-5">
+					<form:form
+						class="form-card d-flex flex-column col-8 align-self-center"
+						method="POST" action="${contextPath}/addFaculty">
+						<input class="form-group" type="text" name="name"
+							placeholder="<spring:message code='addFacylty.name' />"></input>
+						<input class="form-group" type="number" name="numberOfSeats"
+							placeholder="<spring:message code='addFacylty.numberOfSeats' />"></input>
+						<input class="form-group" type="number" name="minimumPassingScore"
+							placeholder="<spring:message code='addFacylty.minimumPassingScore' />"></input>
+						<button type="submit" class=" btn btn-outline-info">
+							<spring:message code='addFacylty.submit' />
+						</button>
+					</form:form>
+				</div>
+			</div>
+			<jsp:include page="footer.jsp"></jsp:include>
 		</div>
 	</div>
-	<!-- Page Content -->
-	<div style="margin-left: 10%">
-		<div class="w3-container w3-teal">
-			<h1>Add faculty</h1>
-		</div>
-		<div
-			class="w3-container w3-panel w3-border w3-round-large w3-border-green"
-			style="margin: auto; margin-top: 10%; width: 20%; hight: 30%">
-			<form:form method="POST" action="${contextPath}/addFaculty">
-				<h2 class="form-signin-heading">
-					<spring:message code='addFacylty.header' />
-				</h2>
-				<input type="text"
-					placeholder="<spring:message code='addFacylty.name' />"
-					class="w3-input w3-border w3-round-large w3-hover-border-green"
-					style="margin-top: 10%;"></input>
-				<input type="number"
-					placeholder="<spring:message code='addFacylty.numberOfSeats' />"
-					class="w3-input w3-border w3-round-large w3-hover-border-green"
-					style="margin-top: 10%;"></input>
-				<input type="number"
-					placeholder="<spring:message code='addFacylty.minimumPassingScore' />"
-					class="w3-input w3-border w3-round-large w3-hover-border-green"
-					style="margin-top: 10%;"></input>
-				<button type="submit" class="w3-button w3-green w3-round-xxlarge"
-					style="margin-top: 5%; margin-bottom: 5%">
-					<spring:message code='addFacylty.submit' />
-				</button>
-			</form:form>
-		</div>
-	</div>
-	<script	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script
+		src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/main.js"></script>
 </body>
 </html>

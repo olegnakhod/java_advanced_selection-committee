@@ -12,116 +12,121 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/profile.css" />
 </head>
 <body>
-	<div class="container">
-		<!-- Sidebar -->
-		<div class="w3-sidebar w3-light-grey w3-bar-block" style="width: 10%">
-			<h3 class="w3-bar-item">
-				<spring:message code='sidebar.menu' />
-			</h3>
-
-			<a href="/home" class="w3-bar-item w3-button"><spring:message
-					code='sidebar.home' /></a>
-
-			<security:authorize access="hasRole('ROLE_CANDIDATE')">
-				<a href="/applyToFaculty" class="w3-bar-item w3-button"><spring:message
-						code='sidebar.apply' /></a>
-				<a href="/addCertificate" class="w3-bar-item w3-button"><spring:message
-						code='sidebar.addCrtificate' /></a>
-			</security:authorize>
-
+	<div class="wrapper">
+		<!-- Sidebar  -->
+		<jsp:include page="sidebar.jsp"></jsp:include>
+		<!-- Content  -->
+		<div id="content" class = "d-flex">
+			<!-- Header  -->
+			<nav
+		class="navbar navbar-expand-lg navbar-light bg-secondary fixed-top">
+		<div class="container-fluid">
 			<security:authorize access="hasRole('ROLE_ADMINISTRATOR')">
-				<a href="/addFaculty" class="w3-bar-item w3-button"><spring:message
-						code='sidebar.addFaculty' /></a>
-				<a href="/viewCandidateInFaculty" class="w3-bar-item w3-button"><spring:message
-						code='sidebar.statment' /></a>
+				<button type="button" id="sidebarCollapse" class="btn btn-info">
+					<i class="fas fa-align-left"></i> <span>Toggle Sidebar</span>
+				</button>
+				<button class="btn btn-dark d-inline-block d-lg-none ml-auto"
+					type="button" data-toggle="collapse"
+					data-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<i class="fas fa-align-justify"></i>
+				</button>
 			</security:authorize>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="nav navbar-nav ml-auto">
+					<li class="nav-item"><a href="/home"
+						class=" btn btn-outline-info"><spring:message
+								code='sidebar.home' /></a></li>
+					<li class="nav-item"><c:if
+							test="${pageContext.request.userPrincipal.name != null}">
+							<form id="logoutForm" method="POST"
+								action="${contextPath}/logout">
+								<input type="hidden" name="${_csrf.parameterName}"
+									value="${_csrf.token}" />
+							</form>
+							<a onclick="document.forms['logoutForm'].submit()"
+								class="btn btn-info ml-2"><spring:message
+									code='sidebar.logout' /></a>
 
-			<c:if test="${pageContext.request.userPrincipal.name != null}">
-				<form id="logoutForm" method="POST" action="${contextPath}/logout">
-					<input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}" />
-				</form>
-				<a onclick="document.forms['logoutForm'].submit()"
-					class="w3-bar-item w3-button"><spring:message
-						code='sidebar.logout' /></a>
-
-			</c:if>
-			<div>
-				<fieldset>
-					<label><spring:message code='login.choose_language' /></label> <select
-						id="locales">
-						<option value="en"><spring:message code='login.english' /></option>
-						<option value="ua"><spring:message code='login.ukrainian' /></option>
-
-					</select>
-				</fieldset>
+						</c:if></li>
+				</ul>
 			</div>
 		</div>
-		<!-- Page Content -->
-		<div style="margin-left: 10%">
-			<div class="w3-container w3-teal">
-				<h1><spring:message code='statment.header' /></h1>
+	</nav>
+
+			<!-- Page Content -->
+			<div
+				class="container d-flex justify-content-center align-self-start mt-5">
+				<c:choose>
+					<c:when test="${mode == 'VIEW_CANDIDATE'}">
+						<div class = "mt-3 col-10">
+							<table class="table table-striped col-10">
+								<thead class="thead-dark ">
+									<tr>
+										<th scope="col"><spring:message code='statment.firsName' /></th>
+										<th scope="col"><spring:message code='statment.lastName' /></th>
+										<th scope="col"><spring:message code='statment.totalGrades' /></th>
+										<th scope="col"><spring:message code='statment.delete' /></th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="candidate" items="${candidates}">
+										<tr>
+											<td>${candidate.firstName}</td>
+											<td>${candidate.lastName}</td>
+											<c:forEach var="subject" items="viewTotalGrades?userId=${candidate.id}">
+												<td>${subject.totalGrades}"</td>
+											</c:forEach>
+											<td><a href="deleteCandidate?userId=${candidate.id}"><spring:message
+														code='statment.delete' /></a></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</c:when>
+					<c:when test="${mode == 'VIEW_FACULTY'}">
+						<div class = "mt-3 col-10">
+							<table class="table table-striped col-10">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col"><spring:message code='statment.name' /></th>
+										<th scope="col"><spring:message code='statment.numberOfSeats' /></th>
+										<th scope="col"><spring:message code='statment.minimumPassingScore' /></th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="faculity" items="${faculityes}">
+										<tr>
+											<td>${faculity.name}</td>
+											<td>${faculity.numberOfSeats}</td>
+											<td>${faculity.minimumPassingScore}</td>
+											<td> <a href="viewCandidatesInFaculty?facultyId=${faculity.id}"><spring:message code='statment.viewCan' /></a></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</c:when>
+				</c:choose>
 			</div>
+			<jsp:include page="footer.jsp"></jsp:include>
 		</div>
 	</div>
-		<c:choose>
-		<c:when test="${mode == 'VIEW_CANDIDATE'}">
-			<div style="margin: auto; margin-top: 5%;width: 75%">
-				<table class="w3-table w3-striped w3-bordered">
-					<thead>
-						<tr class="w3-green">
-							<th><spring:message code='statment.firsName' /></th>
-							<th><spring:message code='statment.lastName' /></th>
-							<th><spring:message code='statment.totalGrades' /></th>
-							<th><spring:message code='statment.delete' /></th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="candidate" items="${candidates}">
-						<c:set var="totalGrades" value="viewTotalGrades?id=${candidate.id}"/>
-							<tr>
-								<td>${candidate.firstName}</td>
-								<td>${candidate.lastName}</td>
-								<td>${totalGrades} </td>
-								<td><a href = "deleteCandidate?userId=${candidate.id}"><spring:message code='statment.delete' /></a></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-		</c:when>
-		<c:when test="${mode == 'VIEW_FACULTY'}">
-			<div style="margin: auto; margin-top: 5%;width: 75%">
-				<table class="w3-table w3-striped w3-bordered">
-					<thead>
-						<tr class="w3-green">
-							<th><spring:message code='statment.name' /></th>
-							<th><spring:message code='statment.numberOfSeats' /></th>
-							<th><spring:message code='statment.minimumPassingScore' /></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="faculity" items="${faculityes}">
-							<tr>
-								<td>${faculity.name}</td>
-								<td>${faculity.numberOfSeats}</td>
-								<td>${faculity.minimumPassingScore}</td>
-								<td><a href = "viewCandidatesInFaculty?facultyId=${faculity.id}"><spring:message code='statment.viewCan' /></a></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-		</c:when>
-	</c:choose>
-	<script	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="js/main.js"></script>
 </body>
 </html>

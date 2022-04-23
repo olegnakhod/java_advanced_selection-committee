@@ -1,6 +1,7 @@
 package academy.lgs.selection_committee.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,14 @@ public class CertificateService {
 	public Certificate getByUserId(Integer userId) {
 		logger.info("Get certificate by user id = " +  userId);
 		List<Certificate> certificates = certificateRepository.findAll();
-		return  certificates.stream().filter(x->x.getUser().getId().equals(userId)).findFirst().get();
+		Certificate certificate = null;
+	
+		Optional<Certificate> certificateOpt = certificates.stream().filter(x->x.getUser().getId().equals(userId)).findFirst();
+		if(certificateOpt.isPresent()) {
+			certificate = certificateOpt.get();
+		}
+		
+		return  certificate ;
 	}
 	
 	public Certificate add(Certificate certificate) {

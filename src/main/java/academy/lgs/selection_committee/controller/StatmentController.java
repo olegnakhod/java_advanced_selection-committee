@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -96,7 +97,7 @@ public class StatmentController {
 	@RequestMapping(value = "/viewTotalGrades", method = RequestMethod.GET)
 	private ModelAndView viewTotalGrades(@RequestParam Integer userId) {
 		ModelAndView map = new ModelAndView("viewCandidateInFaculty");
-		map.addObject("subject",  certificateService.getByUserId(userId).getSubject().getTotalGrades());
+		map.addObject("subject",  certificateService.getByUserId(userId).getSubject());
 		return map;
 	}
 	

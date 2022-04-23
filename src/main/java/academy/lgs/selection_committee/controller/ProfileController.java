@@ -32,7 +32,7 @@ public class ProfileController {
 		ModelAndView map = new ModelAndView("home");
 		map.addObject("userViewer",  getCurrentUser());
 		
-		if( getCurrentUser().getUserRole().equals(UserRole.ROLE_CANDIDATE)){
+		if( getCurrentUser().getUserRole().equals(UserRole.ROLE_CANDIDATE) && certificateService.getByUserId(getCurrentUser().getId()) != null){
 			map.addObject( "subjectsViewer", certificateService.getByUserId(getCurrentUser().getId()).getSubject());
 		}
 		

@@ -17,26 +17,12 @@
 <body>
 	<div class="wrapper">
 		<!-- Sidebar  -->
-		<nav id="sidebar" class='active'>
-			<div class="sidebar-header">
-				<h3 class="w3-bar-item">
-					<spring:message code='sidebar.menu' />
-				</h3>
-			</div>
-			<a href="/home" class="w3-bar-item w3-button"><spring:message
-					code='sidebar.home' /></a>
-			<security:authorize access="hasRole('ROLE_ADMINISTRATOR')">
-				<a href="/addFaculty" class="w3-bar-item w3-button"><spring:message
-						code='sidebar.addFaculty' /></a>
-				<a href="/viewCandidateInFaculty" class="w3-bar-item w3-button"><spring:message
-						code='sidebar.statment' /></a>
-			</security:authorize>
-		</nav>
-
-		<!-- Header  -->
-		<div id="content">
+		<jsp:include page="sidebar.jsp"></jsp:include>
+		<!-- Content  -->
+		<div id="content" class="d-flex">
 			<!-- Header  -->
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<nav
+				class="navbar navbar-expand-lg navbar-light bg-secondary fixed-top">
 				<div class="container-fluid">
 					<security:authorize access="hasRole('ROLE_ADMINISTRATOR')">
 						<button type="button" id="sidebarCollapse" class="btn btn-info">
@@ -52,7 +38,8 @@
 					</security:authorize>
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="nav navbar-nav ml-auto">
-							<li class="nav-item active"><a href="/home" class="nav-link"><spring:message
+							<li class="nav-item"><a href="/home"
+								class=" btn btn-outline-info"><spring:message
 										code='sidebar.home' /></a></li>
 							<li class="nav-item"><c:if
 									test="${pageContext.request.userPrincipal.name != null}">
@@ -62,7 +49,8 @@
 											value="${_csrf.token}" />
 									</form>
 									<a onclick="document.forms['logoutForm'].submit()"
-										class="nav-link"><spring:message code='sidebar.logout' /></a>
+										class="btn btn-info ml-2"><spring:message
+											code='sidebar.logout' /></a>
 
 								</c:if></li>
 						</ul>
@@ -70,97 +58,94 @@
 				</div>
 			</nav>
 
-			<!-- Page Content -->
-			<div class="w3-container"
-				style="margin-left: 10%; width: 100%; hight: 100%">
-				<!-- Header -->
-				<div class="w3-container w3-teal">
-					<h1>
-						<spring:message code='edit.header' />
-					</h1>
-				</div>
+			<!-- Body -->
+			<div
+				class="container d-flex justify-content-center align-self-center">
+				<c:choose>
+					<c:when test="${mode == 'CHANGE_USER'}">
+						<div
+							class="container d-flex flex-column bg-white shadow rounded overflow-hidden pt-5 pb-5">
+							<form:form method="POST" action="${contextPath}/changeUser"
+								enctype="form-data"
+								class="form-card d-flex flex-column col-8 align-self-center">
+								<input class="form-group" type="text" name="firstName"
+									placeholder="<spring:message code='edit.firsName' />" />
+								<input class="form-group" type="text" name="lastName"
+									placeholder="<spring:message code='edit.lastName'/>" />
+								<input class="form-group" type="number" name="age"
+									placeholder="<spring:message code='edit.age'/>" />
+								<button type="submit" class=" btn btn-outline-info">
+									<spring:message code='edit.update' />
+								</button>
+							</form:form>
+							<div class="align-self-center mt-5">
+								<span class="font-weight-light text-muted">Change:</span>
+							</div>
+							<div class="btn-group mt-3 align-self-center" role="group"
+								aria-label="Basic example">
+								<a href="changeUser" class="btn btn-info">User</a> <a
+									href="changeFoto" class="btn btn-secondary">Foto</a> <a
+									href="changePassword" class="btn btn-secondary">Password</a>
+							</div>
+						</div>
+					</c:when>
+					<c:when test="${mode == 'CHANGE_FOTO'}">
+						<div
+							class="container d-flex flex-column bg-white shadow rounded overflow-hidden pt-5 pb-5">
+							<form:form
+								class="form-card d-flex flex-column col-8 align-self-center"
+								method="POST" action="${contextPath}/changeFoto"
+								enctype="multipart/form-data">
+								<input class="form-group form-control-file" type="file"
+									name="image" />
+								<button class=" btn btn-outline-info" type="submit">
+									<spring:message code='edit.update' />
+								</button>
+							</form:form>
+							<div class="align-self-center mt-2">
+								<span class="font-weight-light text-muted">Change:</span>
+							</div>
+							<div class="btn-group mt-3  mb-3 align-self-center" role="group"
+								aria-label="Basic example">
+								<a href="changeUser" class="btn btn-secondary">User</a> <a
+									href="changeFoto" class="btn btn-info">Foto</a> <a
+									href="changePassword" class="btn btn-secondary">Password</a>
+							</div>
+						</div>
+					</c:when>
+					<c:when test="${mode == 'CHANGE_PASSWORD'}">
+						<div
+							class="container d-flex flex-column bg-white shadow rounded overflow-hidden pt-5 pb-5">
+							<form:form
+								class="form-card d-flex flex-column col-8 align-self-center"
+								method="POST" action="${contextPath}/changePassword"
+								enctype="form-data">
+								<input class="form-group " type="text" name="password"
+									placeholder="<spring:message code='edit.password'/>" />
+								<input class="form-group" type="text" name="passwordConfirm"
+									placeholder="<spring:message code='edit.passwordConf'/>" />
+								<button class=" btn btn-outline-info" type="submit">
+									<spring:message code='edit.update' />
+								</button>
+							</form:form>
+							<div class="align-self-center mt-4">
+								<span class="font-weight-light text-muted">Change:</span>
+							</div>
+							<div class="btn-group mt-3 mb-3 align-self-center" role="group"
+								aria-label="Basic example">
+								<a href="changeUser" class="btn btn-secondary">User</a> <a
+									href="changeUser" class="btn btn-secondary">Foto</a> <a
+									href="changeUser" class="btn btn-info">Password</a>
+							</div>
+						</div>
+					</c:when>
+				</c:choose>
 
-				<!-- Body -->
-				<div
-					class="w3-container w3-panel w3-border w3-round-large w3-border-green"
-					style="margin: auto; margin-top: 10%; width: 25%; hight: 30%">
-					<form:form method="POST" action="${contextPath}/changeUser"
-						enctype="form-data">
-						<table>
-							<tr style="margin-top: 10%;">
-								<td><input type="text" name="firstName"
-									placeholder="<spring:message code='edit.firsName' />"
-									class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
-							</tr>
-							<tr style="margin-top: 10%;">
-
-								<td><input type="text" name="lastName"
-									placeholder="<spring:message code='edit.lastName'/>"
-									class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
-							</tr>
-							<tr style="margin-top: 10%;">
-								<td><input type="number" name="age"
-									placeholder="<spring:message code='edit.age'/>"
-									class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
-							</tr>
-							<tr style="margin-top: 10%;">
-								<td>
-									<button type="submit"
-										class="w3-button w3-green w3-round-xxlarge"
-										style="margin-top: 5%; margin-bottom: 5%">
-										<spring:message code='edit.update' />
-									</button>
-								</td>
-							</tr>
-						</table>
-					</form:form>
-					<form:form method="POST" action="${contextPath}/changeFoto"
-						enctype="multipart/form-data">
-						<table>
-							<tr>
-								<td><input type="file" name="image"
-									style="margin-top: 10%;" /></td>
-							</tr>
-							<tr style="margin-top: 10%;">
-								<td>
-									<button type="submit"
-										class="w3-button w3-green w3-round-xxlarge"
-										style="margin-top: 5%; margin-bottom: 5%">
-										<spring:message code='edit.update' />
-									</button>
-								</td>
-							</tr>
-						</table>
-					</form:form>
-					<form:form method="POST" action="${contextPath}/changePassword"
-						enctype="form-data">
-						<table>
-							<tr style="margin-top: 10%;">
-								<td><input type="text" name="password"
-									placeholder="<spring:message code='edit.password'/>"
-									class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
-							</tr>
-							<tr style="margin-top: 10%;">
-								<td><input type="text" name="passwordConfirm"
-									placeholder="<spring:message code='edit.passwordConf'/>"
-									class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
-							</tr>
-							<tr style="margin-top: 10%;">
-								<td>
-									<button type="submit"
-										class="w3-button w3-green w3-round-xxlarge"
-										style="margin-top: 5%; margin-bottom: 5%">
-										<spring:message code='edit.update' />
-									</button>
-								</td>
-							</tr>
-						</table>
-					</form:form>
-				</div>
 			</div>
+
+			<jsp:include page="footer.jsp"></jsp:include>
 		</div>
 	</div>
-	<jsp:include page="footer.jsp"></jsp:include>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script
