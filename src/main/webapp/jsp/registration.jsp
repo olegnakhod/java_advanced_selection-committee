@@ -22,8 +22,8 @@
 	<div class="wrapper fadeInDown">
 		<div id="formContent">
 			<!-- Tabs Titles -->
-			<a class="inactive underlineHover" href="login"> Sign In </a> <a
-				class="active" href="registration">Sign Up </a>
+			<a class="inactive underlineHover" href="login"> <spring:message code='login.logging' /> </a> <a
+				class="active" href="registration"><spring:message code='login.create' /> </a>
 
 			<!-- Login Form -->
 			<form:form method="POST" action="${contextPath}/registration" enctype="multipart/form-data">

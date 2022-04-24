@@ -1,10 +1,6 @@
 package academy.lgs.selection_committee.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -77,35 +73,49 @@ public class StatmentController {
 	
 	@RequestMapping(value = "/viewCandidatesInFaculty", method = RequestMethod.GET)
 	private ModelAndView viewCandidatesInFaculty(@RequestParam Integer facultyId,HttpServletRequest req) {
-		ModelAndView map = new ModelAndView("viewCandidateInFaculty");
+		ModelAndView map = new ModelAndView("statment");
 		req.setAttribute("mode", "VIEW_CANDIDATE");
-		List<User> users = new ArrayList<>();
-		List<Statment> facultyIncludCandidates = statmentService.getAllByFacultyId(facultyId);
-		facultyIncludCandidates.stream().forEach(x -> users.add(x.getUser()));
-		map.addObject("candidates", users);
+		map.addObject("candidates", statmentService.getUsersByFacultyId(facultyId));
 		return map;
 	}
 	
 	@RequestMapping(value = "/viewCandidateInFaculty", method = RequestMethod.GET)
 	private ModelAndView viewFaculty(HttpServletRequest req) {
-		ModelAndView map = new ModelAndView("viewCandidateInFaculty");
+		ModelAndView map = new ModelAndView("statment");
 		req.setAttribute("mode", "VIEW_FACULTY");
 		map.addObject("faculityes",  facultyService.getAll());
 		return map;
 	}
 	
-	@RequestMapping(value = "/viewTotalGrades", method = RequestMethod.GET)
-	private ModelAndView viewTotalGrades(@RequestParam Integer userId) {
-		ModelAndView map = new ModelAndView("viewCandidateInFaculty");
-		map.addObject("subject",  certificateService.getByUserId(userId).getSubject());
+	@RequestMapping(value = "/viewProfileCandidates", method = RequestMethod.GET)
+	private ModelAndView viewProfileCandidates(@RequestParam Integer userId, HttpServletRequest req) {
+		req.setAttribute("mode", "VIEW_CANDIDATE");
+		ModelAndView map = new ModelAndView("home");
+		map.addObject("userViewer",  userService.getById(userId));
+		map.addObject( "subjectsViewer", certificateService.getByUserId(userId).getSubject());
+		return map;
+	}
+	
+	@RequestMapping(value = "/viewActiveApplyes", method = RequestMethod.GET)
+	private ModelAndView viewActiveApplyes(HttpServletRequest req) {
+		req.setAttribute("mode", "VIEW_APPLYES");
+		ModelAndView map = new ModelAndView("statment");
+		map.addObject("usersFacultyes",  statmentService.getFacultyesByUserId(getCurrentUser().getId()));
 		return map;
 	}
 	
 	@RequestMapping(value = "/deleteCandidate", method = RequestMethod.GET)
-	private ModelAndView deleteCandidate(@RequestParam Integer userId) {
-		ModelAndView map = new ModelAndView("viewCandidateInFaculty");
+	private ModelAndView deleteCandidate(@RequestParam Integer userId,HttpServletRequest req) {
+		req.setAttribute("mode", "VIEW_CANDIDATE");
 		statmentService.deleteByUserId(userId);
-		return map;
+		return new ModelAndView("redirect:/viewCandidateInFaculty");
+	}
+	
+	@RequestMapping(value = "/deleteFaculty", method = RequestMethod.GET)
+	private ModelAndView deleteFaculty(@RequestParam Integer facultyId,HttpServletRequest req) {
+		req.setAttribute("mode", "VIEW_APPLYES");
+		statmentService.deleteByFacultyId(facultyId);
+		return new ModelAndView("redirect:/viewActiveApplyes");
 	}
 	
 }

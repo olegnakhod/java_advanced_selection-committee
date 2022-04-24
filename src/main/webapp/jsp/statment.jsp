@@ -27,7 +27,8 @@
 		<div class="container-fluid">
 			<security:authorize access="hasRole('ROLE_ADMINISTRATOR')">
 				<button type="button" id="sidebarCollapse" class="btn btn-info">
-					<i class="fas fa-align-left"></i> <span>Toggle Sidebar</span>
+					<i class="fas fa-align-left"></i> <span><spring:message
+								code='header.admin' /></span>
 				</button>
 				<button class="btn btn-dark d-inline-block d-lg-none ml-auto"
 					type="button" data-toggle="collapse"
@@ -70,7 +71,7 @@
 									<tr>
 										<th scope="col"><spring:message code='statment.firsName' /></th>
 										<th scope="col"><spring:message code='statment.lastName' /></th>
-										<th scope="col"><spring:message code='statment.totalGrades' /></th>
+										<th scope="col"><spring:message code='statment.profile' /></th>
 										<th scope="col"><spring:message code='statment.delete' /></th>
 									</tr>
 								</thead>
@@ -79,10 +80,8 @@
 										<tr>
 											<td>${candidate.firstName}</td>
 											<td>${candidate.lastName}</td>
-											<c:forEach var="subject" items="viewTotalGrades?userId=${candidate.id}">
-												<td>${subject.totalGrades}"</td>
-											</c:forEach>
-											<td><a href="deleteCandidate?userId=${candidate.id}"><spring:message
+											<td><a class=" btn btn-outline-info" href="viewProfileCandidates?userId=${candidate.id}"><spring:message code='statment.view'/></a></td>
+											<td><a class=" btn btn-outline-info" href="deleteCandidate?userId=${candidate.id}"><spring:message
 														code='statment.delete' /></a></td>
 										</tr>
 									</c:forEach>
@@ -107,7 +106,31 @@
 											<td>${faculity.name}</td>
 											<td>${faculity.numberOfSeats}</td>
 											<td>${faculity.minimumPassingScore}</td>
-											<td> <a href="viewCandidatesInFaculty?facultyId=${faculity.id}"><spring:message code='statment.viewCan' /></a></td>
+											<td> <a class=" btn btn-outline-info" href="viewCandidatesInFaculty?facultyId=${faculity.id}"><spring:message code='statment.viewCan' /></a></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</c:when>
+					<c:when test="${mode == 'VIEW_APPLYES'}">
+						<div class = "mt-3 col-10">
+							<table class="table table-striped col-10">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col"><spring:message code='statment.name' /></th>
+										<th scope="col"><spring:message code='statment.numberOfSeats' /></th>
+										<th scope="col"><spring:message code='statment.minimumPassingScore' /></th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="usersFaculty" items="${usersFacultyes}">
+										<tr>
+											<td>${usersFaculty.name}</td>
+											<td>${usersFaculty.numberOfSeats}</td>
+											<td>${usersFaculty.minimumPassingScore}</td>
+											<td> <a class=" btn btn-outline-info" href="deleteFaculty?facultyId=${usersFaculty.id}"><spring:message code='statment.cancel' /></a></td>
 										</tr>
 									</c:forEach>
 								</tbody>

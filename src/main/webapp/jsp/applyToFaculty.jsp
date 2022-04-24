@@ -26,7 +26,8 @@
 				<div class="container-fluid">
 					<security:authorize access="hasRole('ROLE_ADMINISTRATOR')">
 						<button type="button" id="sidebarCollapse" class="btn btn-info">
-							<i class="fas fa-align-left"></i> <span>Toggle Sidebar</span>
+							<i class="fas fa-align-left"></i> <span><spring:message
+								code='header.admin' /></span>
 						</button>
 						<button class="btn btn-dark d-inline-block d-lg-none ml-auto"
 							type="button" data-toggle="collapse"
@@ -60,30 +61,32 @@
 
 			<!-- Body -->
 			<div
-				class="container d-flex justify-content-center align-self-center">
-				<div class="card-deck">
+				class="container-fluid d-flex justify-content-center align-self-center">
+				<div class="container-fluid card-columns">
 					<c:if test="${not empty facultyes}">
 						<c:forEach items="${facultyes}" var="currentFacultyes">
-							<div class="card-body border ml-1" style="width: 25rem;">
-								<h3 class="card-title">
-									<spring:message code='applyFacylty.name' />
-									: ${currentFacultyes.name}
-								</h3>
-								<h5 class="card-subtitle mb-2 text-muted">
-									<spring:message code='applyFacylty.numberOfSeats' />
-									: ${currentFacultyes.numberOfSeats}
-								</h5>
-								<h5 class="card-subtitle mb-2 text-muted">
-									<spring:message code='applyFacylty.minimumPassingScore' />
-									: ${currentFacultyes.minimumPassingScore}
-								</h5>
-								<form:form action="${contextPath}/applyToFaculty" method="POST"
-									enctype="multipart/form-data">
-									<input type="hidden" value="${currentFacultyes.id}"
-										name="facultyId">
-									<input type="submit" class="btn btn-secondary"
-										value="<spring:message code='applyFacylty.applyTo' />">
-								</form:form>
+							<div class="card border ml-1">
+								<div class="card-body ">
+									<h3 class="card-title">
+										<spring:message code='applyFacylty.name' />
+										: ${currentFacultyes.name}
+									</h3>
+									<h5 class="card-subtitle mb-2 text-muted">
+										<spring:message code='applyFacylty.numberOfSeats' />
+										: ${currentFacultyes.numberOfSeats}
+									</h5>
+									<h5 class="card-subtitle mb-2 text-muted">
+										<spring:message code='applyFacylty.minimumPassingScore' />
+										: ${currentFacultyes.minimumPassingScore}
+									</h5>
+									<form:form action="${contextPath}/applyToFaculty" method="POST"
+										enctype="multipart/form-data">
+										<input type="hidden" value="${currentFacultyes.id}"
+											name="facultyId">
+										<input type="submit" class="btn btn-secondary"
+											value="<spring:message code='applyFacylty.applyTo' />">
+									</form:form>
+								</div>
 							</div>
 						</c:forEach>
 					</c:if>

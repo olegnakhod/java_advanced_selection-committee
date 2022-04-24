@@ -27,7 +27,8 @@
 				<div class="container-fluid">
 					<security:authorize access="hasRole('ROLE_ADMINISTRATOR')">
 						<button type="button" id="sidebarCollapse" class="btn btn-info">
-							<i class="fas fa-align-left"></i> <span>Toggle Sidebar</span>
+							<i class="fas fa-align-left"></i> <span><spring:message
+								code='header.admin' /></span>
 						</button>
 						<button class="btn btn-dark d-inline-block d-lg-none ml-auto"
 							type="button" data-toggle="collapse"

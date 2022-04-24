@@ -26,7 +26,8 @@
 				<div class="container-fluid">
 					<security:authorize access="hasRole('ROLE_ADMINISTRATOR')">
 						<button type="button" id="sidebarCollapse" class="btn btn-info">
-							<i class="fas fa-align-left"></i> <span>Toggle Sidebar</span>
+							<i class="fas fa-align-left"></i> <span><spring:message
+								code='header.admin' /></span>
 						</button>
 						<button class="btn btn-dark d-inline-block d-lg-none ml-auto"
 							type="button" data-toggle="collapse"
@@ -79,13 +80,13 @@
 								</button>
 							</form:form>
 							<div class="align-self-center mt-5">
-								<span class="font-weight-light text-muted">Change:</span>
+								<span class="font-weight-light text-muted"><spring:message code='edit.title' />:</span>
 							</div>
 							<div class="btn-group mt-3 align-self-center" role="group"
 								aria-label="Basic example">
-								<a href="changeUser" class="btn btn-info">User</a> <a
-									href="changeFoto" class="btn btn-secondary">Foto</a> <a
-									href="changePassword" class="btn btn-secondary">Password</a>
+								<a href="changeUser" class="btn btn-info"><spring:message code='edit.page1' /></a> <a
+									href="changeFoto" class="btn btn-secondary"><spring:message code='edit.page2' /></a> <a
+									href="changePassword" class="btn btn-secondary"><spring:message code='edit.page3' /></a>
 							</div>
 						</div>
 					</c:when>
@@ -103,13 +104,13 @@
 								</button>
 							</form:form>
 							<div class="align-self-center mt-2">
-								<span class="font-weight-light text-muted">Change:</span>
+								<span class="font-weight-light text-muted"><spring:message code='edit.title' />:</span>
 							</div>
 							<div class="btn-group mt-3  mb-3 align-self-center" role="group"
 								aria-label="Basic example">
-								<a href="changeUser" class="btn btn-secondary">User</a> <a
-									href="changeFoto" class="btn btn-info">Foto</a> <a
-									href="changePassword" class="btn btn-secondary">Password</a>
+								<a href="changeUser" class="btn btn-secondary"><spring:message code='edit.page1' /></a> <a
+									href="changeFoto" class="btn btn-info"><spring:message code='edit.page2' /></a> <a
+									href="changePassword" class="btn btn-secondary"><spring:message code='edit.page3' /></a>
 							</div>
 						</div>
 					</c:when>
@@ -129,13 +130,13 @@
 								</button>
 							</form:form>
 							<div class="align-self-center mt-4">
-								<span class="font-weight-light text-muted">Change:</span>
+								<span class="font-weight-light text-muted"><spring:message code='edit.title' />:</span>
 							</div>
 							<div class="btn-group mt-3 mb-3 align-self-center" role="group"
 								aria-label="Basic example">
-								<a href="changeUser" class="btn btn-secondary">User</a> <a
-									href="changeUser" class="btn btn-secondary">Foto</a> <a
-									href="changeUser" class="btn btn-info">Password</a>
+								<a href="changeUser" class="btn btn-secondary"><spring:message code='edit.page1' /></a> <a
+									href="changeFoto" class="btn btn-secondary"><spring:message code='edit.page2' /></a> <a
+									href="changePassword" class="btn btn-info"><spring:message code='edit.page3' /></a>
 							</div>
 						</div>
 					</c:when>

@@ -17,8 +17,8 @@
 	<div class="wrapper fadeInDown">
 		<div id="formContent">
 			<!-- Tabs Titles -->
-			<a class="active" href="login"> Sign In </a> <a
-				class="inactive underlineHover" href="registration">Sign Up </a>
+			<a class="active" href="login"> <spring:message code='login.logging' /> </a>
+		    <a class="inactive underlineHover" href="registration"><spring:message code='login.create' /> </a>
 
 			<!-- Login Form -->
 			<form method="POST" action="${contextPath}/login">
