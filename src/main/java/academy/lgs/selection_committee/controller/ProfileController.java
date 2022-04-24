@@ -1,5 +1,7 @@
 package academy.lgs.selection_committee.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,11 +30,12 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public ModelAndView viewProfile() {
+	public ModelAndView viewProfile(HttpServletRequest req) {
+		req.setAttribute("mode", "VIEW_PROFILE");
 		ModelAndView map = new ModelAndView("home");
 		map.addObject("userViewer",  getCurrentUser());
 		
-		if( getCurrentUser().getUserRole().equals(UserRole.ROLE_CANDIDATE)){
+		if( getCurrentUser().getUserRole().equals(UserRole.ROLE_CANDIDATE) && certificateService.getByUserId(getCurrentUser().getId()) != null){
 			map.addObject( "subjectsViewer", certificateService.getByUserId(getCurrentUser().getId()).getSubject());
 		}
 		
