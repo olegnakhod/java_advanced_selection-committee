@@ -1,16 +1,24 @@
 package academy.lgs.selection_committee.domain;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name = "users")
@@ -35,6 +43,16 @@ public class User {
 
 	@Enumerated(EnumType.STRING)
 	private UserRole userRole;
+	
+    @OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE }, fetch = FetchType.EAGER, orphanRemoval = true)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Certificate> сertificats = new HashSet<>();
+    
+    @OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE }, fetch = FetchType.EAGER, orphanRemoval = true)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Statment> statments = new HashSet<>();
 	
 	public User(User user) {
 		this.id = user.id;

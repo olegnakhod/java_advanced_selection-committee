@@ -4,13 +4,18 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name = "subjects_grades")
@@ -34,6 +39,11 @@ public class SubjectsGrades {
 	
 	@Column(name = "total_grades")
 	private Integer totalGrades;
+	
+    @OneToMany(mappedBy = "subject", cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE }, fetch = FetchType.EAGER, orphanRemoval = true)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Certificate> сertificats = new HashSet<>();
 	
 	public SubjectsGrades(Integer id, Integer firstSubject, Integer secondSubject, Integer thirdSubject,
 			Integer sumSchoolsCerticifate, Integer totalGrades) {

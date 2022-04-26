@@ -32,7 +32,7 @@
 				<input name="age" type="number"	placeholder="<spring:message code='reg.age' />" id="login"	class="fadeIn second">
 				<input name="email"	type="text"	placeholder="<spring:message code='reg.email'/>" id="login" class="fadeIn second">
 				<input name="password"	type="password"	placeholder="<spring:message code='reg.password'/>" id="password" class="fadeIn second">
-				<input name="passwordСonfirm" type="password"	placeholder="<spring:message code='reg.passwordConf' />" id="password"	class="fadeIn second">
+				<input name="passwordConfirm" type="password"	placeholder="<spring:message code='reg.passwordConf' />" id="password"	class="fadeIn second">
 				<input name="image"	type="file"	placeholder="<spring:message code='reg.addFoto'/>" id="login"class="fadeIn second">
 				<button type="submit" class="fadeIn fourth"> <spring:message code='reg.registr' />	</button>
 				<input type="hidden" name="${_csrf.parameterName}"	value="${_csrf.token}" />
