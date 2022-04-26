@@ -29,6 +29,7 @@ public class ApplicationTests {
 	@Autowired
 	private UserRepository userRepository;
 	
+	
 	@Test
 	public void testSaveUser() {
 		List<User> users = userRepository.findAll();
@@ -55,7 +56,7 @@ public class ApplicationTests {
 	}
 	
 	@Test
-	public void testFindByEmail() {
+	public void testGetByEmail() {
 		List<User> users = userRepository.findAll();
 		assertThat(users, hasSize(0));
 

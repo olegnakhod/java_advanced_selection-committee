@@ -1,12 +1,15 @@
 package academy.lgs.selection_committee.domain;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -31,7 +34,7 @@ public class SubjectsGrades {
 	
 	@Column(name = "total_grades")
 	private Integer totalGrades;
-
+	
 	public SubjectsGrades(Integer id, Integer firstSubject, Integer secondSubject, Integer thirdSubject,
 			Integer sumSchoolsCerticifate, Integer totalGrades) {
 		this.id = id;

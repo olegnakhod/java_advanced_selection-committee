@@ -35,7 +35,7 @@ public class User {
 
 	@Enumerated(EnumType.STRING)
 	private UserRole userRole;
-
+	
 	public User(User user) {
 		this.id = user.id;
 		this.firstName = user.firstName;

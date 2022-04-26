@@ -25,7 +25,7 @@ public class Faculty {
 	
 	@Column(name = "minimum_passing_score")
 	private Integer minimumPassingScore;
-
+	
 	public Faculty(Integer id, String name, Integer numberOfSeats, Integer minimumPassingScore) {
 		this.id = id;
 		this.name = name;
