@@ -17,30 +17,17 @@
 <body>
 	<div class="wrapper">
 		<!-- Sidebar  -->
-		<nav id="sidebar" class='active'>
-			<div class="sidebar-header">
-				<h3 class="w3-bar-item">
-					<spring:message code='sidebar.menu' />
-				</h3>
-			</div>
-			<a href="/home" class="w3-bar-item w3-button"><spring:message
-					code='sidebar.home' /></a>
-			<security:authorize access="hasRole('ROLE_ADMINISTRATOR')">
-				<a href="/addFaculty" class="w3-bar-item w3-button"><spring:message
-						code='sidebar.addFaculty' /></a>
-				<a href="/viewCandidateInFaculty" class="w3-bar-item w3-button"><spring:message
-						code='sidebar.statment' /></a>
-			</security:authorize>
-		</nav>
-
-		<!-- Header  -->
-		<div id="content">
+		<jsp:include page="sidebar.jsp"></jsp:include>
+		<!-- Content  -->
+		<div id="content" class="d-flex">
 			<!-- Header  -->
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<nav
+				class="navbar navbar-expand-lg navbar-light bg-secondary fixed-top">
 				<div class="container-fluid">
 					<security:authorize access="hasRole('ROLE_ADMINISTRATOR')">
 						<button type="button" id="sidebarCollapse" class="btn btn-info">
-							<i class="fas fa-align-left"></i> <span>Toggle Sidebar</span>
+							<i class="fas fa-align-left"></i> <span><spring:message
+								code='header.admin' /></span>
 						</button>
 						<button class="btn btn-dark d-inline-block d-lg-none ml-auto"
 							type="button" data-toggle="collapse"
@@ -52,7 +39,8 @@
 					</security:authorize>
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="nav navbar-nav ml-auto">
-							<li class="nav-item active"><a href="/home" class="nav-link"><spring:message
+							<li class="nav-item"><a href="/home"
+								class=" btn btn-outline-info"><spring:message
 										code='sidebar.home' /></a></li>
 							<li class="nav-item"><c:if
 									test="${pageContext.request.userPrincipal.name != null}">
@@ -62,7 +50,8 @@
 											value="${_csrf.token}" />
 									</form>
 									<a onclick="document.forms['logoutForm'].submit()"
-										class="nav-link"><spring:message code='sidebar.logout' /></a>
+										class="btn btn-info ml-2"><spring:message
+											code='sidebar.logout' /></a>
 
 								</c:if></li>
 						</ul>
@@ -71,52 +60,41 @@
 			</nav>
 
 			<!-- Body -->
-			<div class="container">
-				<!-- Page Content -->
-				<div style="margin-left: 10%">
-					<div class="w3-container w3-teal">
-						<h1>
-							<spring:message code='applyFacylty.header' />
-						</h1>
-					</div>
-
-					<div class="w3-container">
-						<c:if test="${not empty facultyes}">
-							<c:forEach items="${facultyes}" var="currentFacultyes">
-
-								<div class="w3-card-4" style="width: 20%; margin: 2%">
-									<div class="w3-container w3-center">
-										<h3>
-											<spring:message code='applyFacylty.name' />
-											: ${currentFacultyes.name}
-										</h3>
-										<p>
-											<spring:message code='applyFacylty.numberOfSeats' />
-											: ${currentFacultyes.numberOfSeats}
-										</p>
-										<p>
-											<spring:message code='applyFacylty.minimumPassingScore' />
-											: ${currentFacultyes.minimumPassingScore}
-										</p>
-									</div>
-
+			<div
+				class="container-fluid d-flex justify-content-center align-self-center">
+				<div class="container-fluid card-columns">
+					<c:if test="${not empty facultyes}">
+						<c:forEach items="${facultyes}" var="currentFacultyes">
+							<div class="card border ml-1">
+								<div class="card-body ">
+									<h3 class="card-title">
+										<spring:message code='applyFacylty.name' />
+										: ${currentFacultyes.name}
+									</h3>
+									<h5 class="card-subtitle mb-2 text-muted">
+										<spring:message code='applyFacylty.numberOfSeats' />
+										: ${currentFacultyes.numberOfSeats}
+									</h5>
+									<h5 class="card-subtitle mb-2 text-muted">
+										<spring:message code='applyFacylty.minimumPassingScore' />
+										: ${currentFacultyes.minimumPassingScore}
+									</h5>
 									<form:form action="${contextPath}/applyToFaculty" method="POST"
 										enctype="multipart/form-data">
 										<input type="hidden" value="${currentFacultyes.id}"
 											name="facultyId">
-										<input type="submit" class="w3-button w3-block w3-dark-grey"
+										<input type="submit" class="btn btn-secondary"
 											value="<spring:message code='applyFacylty.applyTo' />">
 									</form:form>
 								</div>
-
-							</c:forEach>
-						</c:if>
-					</div>
+							</div>
+						</c:forEach>
+					</c:if>
 				</div>
 			</div>
+			<jsp:include page="footer.jsp"></jsp:include>
 		</div>
 	</div>
-	<jsp:include page="footer.jsp"></jsp:include>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script

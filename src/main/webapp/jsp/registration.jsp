@@ -16,71 +16,41 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Create an account</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<link href="${contextPath}/resources/css/bootstrap.min.css"	rel="stylesheet">
+   <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-	<div class="w3-container w3-panel w3-border w3-round-large w3-border-green" style ="margin: auto; margin-top: 10%; width: 25%; hight: 30%">
-		<form:form method="POST" action="${contextPath}/registration"
-			enctype="multipart/form-data">
-			<table>
-				<tr style="margin-top: 10%;">
-					<td><input type="text" name="firstName"
-						placeholder="<spring:message code='reg.firsName' />"
-						class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
-				</tr>
-				<tr style="margin-top: 10%;">
+	<div class="wrapper fadeInDown">
+		<div id="formContent">
+			<!-- Tabs Titles -->
+			<a class="inactive underlineHover" href="login"> <spring:message code='login.logging' /> </a> <a
+				class="active" href="registration"><spring:message code='login.create' /> </a>
 
-					<td><input type="text" name="lastName"
-						placeholder="<spring:message code='reg.lastName'/>"
-						class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
-				</tr>
-				<tr style="margin-top: 10%;">
-					<td><input type="number" name="age"
-						placeholder="<spring:message code='reg.age'/>"
-						class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
-				</tr>
-				<tr style="margin-top: 10%;">
-					<td><input type="text" name="email"
-						placeholder="<spring:message code='reg.email'/>"
-						class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
-				</tr>
-				<tr style="margin-top: 10%;">
-					<td><input type="text" name="password"
-						placeholder="<spring:message code='reg.password'/>"
-						class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
-				</tr>
-				<tr style="margin-top: 10%;">
-					<td><input type="text" name="passwordConfirm"
-						placeholder="<spring:message code='reg.passwordConf'/>"
-						class="w3-input w3-border w3-round-large w3-hover-border-green" /></td>
-				</tr>
-				<tr>
-					<td><input type="file" name="image"
-						value="<spring:message code='reg.addFoto'/>"
-						style="margin-top: 10%;" /></td>
-				</tr>
-				<tr style="margin-top: 10%;">
-					<td>
-						<button type="submit" class="w3-button w3-green w3-round-xxlarge"
-							style="margin-top: 5%; margin-bottom: 5%">
-							<spring:message code='reg.registr' />
-						</button>
-					</td>
-				</tr>
-			</table>
-			<input type="hidden" name="${_csrf.parameterName}"
-				value="${_csrf.token}" />
-		</form:form>
-		<div>
-				<fieldset>
-				<label><spring:message code='login.choose_language' /></label>
-				 	<select id="locales">
+			<!-- Login Form -->
+			<form:form method="POST" action="${contextPath}/registration" enctype="multipart/form-data">
+				<input name="firstName" type="text"	placeholder="<spring:message code='reg.firstName' />" id="login"	class="fadeIn second">
+				<input name="lastName"	type="text"	placeholder="<spring:message code='reg.lastName'/>" id="login" class="fadeIn second">
+				<input name="age" type="number"	placeholder="<spring:message code='reg.age' />" id="login"	class="fadeIn second">
+				<input name="email"	type="text"	placeholder="<spring:message code='reg.email'/>" id="login" class="fadeIn second">
+				<input name="password"	type="password"	placeholder="<spring:message code='reg.password'/>" id="password" class="fadeIn second">
+				<input name="confirmPassword" type="password"	placeholder="<spring:message code='reg.passwordConf' />" id="password"	class="fadeIn second">
+				<input name="image"	type="file"	placeholder="<spring:message code='reg.addFoto'/>" id="login"class="fadeIn second">
+				<button type="submit" class="fadeIn fourth"> <spring:message code='reg.registr' />	</button>
+				<input type="hidden" name="${_csrf.parameterName}"	value="${_csrf.token}" />
+			</form:form>
+
+			<!-- Remind Passowrd -->
+			<div id="formFooter">
+				<div>
+					<label><spring:message code='login.choose_language' /></label> <select
+						id="locales">
 						<option value="en"><spring:message code='login.english' /></option>
 						<option value="ua"><spring:message code='login.ukrainian' /></option>
+
 					</select>
-				</fieldset>
+				</div>
 			</div>
+
+		</div>
 	</div>
 	<script	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

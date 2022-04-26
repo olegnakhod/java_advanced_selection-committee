@@ -43,6 +43,10 @@ public class UserService {
     	return user;
     }
     
+    public User getById(Integer userId) {
+    	return userRepository.getById(userId);
+    }
+    
     public void updateFoto(User user,MultipartFile image) throws IOException {
     	logger.info("Update field foto in user item :" + user);
     	User userDB = userRepository.getById(user.getId());

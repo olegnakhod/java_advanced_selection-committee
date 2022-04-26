@@ -2,6 +2,8 @@ package academy.lgs.selection_committee.controller;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -67,28 +69,51 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/changeUser", method = RequestMethod.POST)
-	public ModelAndView changeUser(@RequestParam String firstName, @RequestParam String lastName,@RequestParam Integer age) throws IOException{
+	public void changeUser(@RequestParam String firstName, @RequestParam String lastName,@RequestParam Integer age, HttpServletRequest req) throws IOException{
+		req.setAttribute("mode", "CHANGE_USER");
 		userService.update(getCurrentUser(), firstName, lastName, age);
+	}
+	
+	@RequestMapping(value = "/changeUser", method = RequestMethod.GET)
+	public ModelAndView changeUser(HttpServletRequest req){
+		req.setAttribute("mode", "CHANGE_USER");
 		ModelAndView map = new ModelAndView("editProfile");
 		return map;
 	}
 	
 	@RequestMapping(value = "/changeFoto", method = RequestMethod.POST)
-	public ModelAndView changeFoto(@RequestParam MultipartFile image) throws IOException {
+	public ModelAndView changeFoto(@RequestParam MultipartFile image,HttpServletRequest req) throws IOException {
+		req.setAttribute("mode", "CHANGE_FOTO");
 		userService.updateFoto(getCurrentUser(), image);
 		ModelAndView map = new ModelAndView("editProfile");
 		return map;
 	}
 	
+	@RequestMapping(value = "/changeFoto", method = RequestMethod.GET)
+	public ModelAndView changeFoto(HttpServletRequest req){
+		req.setAttribute("mode", "CHANGE_FOTO");
+		ModelAndView map = new ModelAndView("editProfile");
+		return map;
+	}
+	
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-	public ModelAndView changePassword(@RequestParam  String password,	@RequestParam String passwordConfirm) throws IOException {
+	public ModelAndView changePassword(@RequestParam  String password,	@RequestParam String passwordConfirm,HttpServletRequest req) throws IOException {
+		req.setAttribute("mode", "CHANGE_PASSWORD");
 		userService.updatePassword(getCurrentUser(), password, passwordConfirm);
 		ModelAndView map = new ModelAndView("editProfile");
 		return map;
 	}
 	
+	@RequestMapping(value = "/changePassword", method = RequestMethod.GET)
+	public ModelAndView changePassword(HttpServletRequest req){
+		req.setAttribute("mode", "CHANGE_PASSWORD");
+		ModelAndView map = new ModelAndView("editProfile");
+		return map;
+	}
+	
 	@RequestMapping(value = "/editProfile", method = RequestMethod.GET)
-	public ModelAndView viewPageEditProfile() {
+	public ModelAndView viewPageEditProfile(HttpServletRequest req) {
+		req.setAttribute("mode", "CHANGE_USER");
 		ModelAndView map = new ModelAndView("editProfile");
 		return map;
 	}
