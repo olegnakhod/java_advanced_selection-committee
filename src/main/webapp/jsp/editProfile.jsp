@@ -71,15 +71,6 @@
 			</nav>
 
 			<!-- Page Content -->
-			<div class="w3-container"
-				style="margin-left: 10%; width: 100%; hight: 100%">
-				<!-- Header -->
-				<div class="w3-container w3-teal">
-					<h1>
-						<spring:message code='edit.header' />
-					</h1>
-				</div>
-
 				<!-- Body -->
 				<div
 					class="w3-container w3-panel w3-border w3-round-large w3-border-green"
