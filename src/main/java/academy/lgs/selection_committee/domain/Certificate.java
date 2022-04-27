@@ -20,18 +20,18 @@ public class Certificate {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Integer certificate_id;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	@JoinColumn(name = "user_fk_id",nullable = false)
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn(name = "subject_id", referencedColumnName = "id")
+	@JoinColumn(name = "subject_fk_id",nullable = false)
 	private SubjectsGrades subject;
 
 	public Certificate(Integer id, User user, SubjectsGrades subject) {
-		this.id = id;
+		this.certificate_id = id;
 		this.user = user;
 		this.subject = subject;
 	}
@@ -45,11 +45,11 @@ public class Certificate {
 	}
 
 	public Integer getId() {
-		return id;
+		return certificate_id;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.certificate_id = id;
 	}
 
 	public User getUser() {
@@ -70,7 +70,7 @@ public class Certificate {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, subject, user);
+		return Objects.hash(certificate_id, subject, user);
 	}
 
 	@Override
@@ -82,12 +82,12 @@ public class Certificate {
 		if (getClass() != obj.getClass())
 			return false;
 		Certificate other = (Certificate) obj;
-		return Objects.equals(id, other.id) && Objects.equals(subject, other.subject)
+		return Objects.equals(certificate_id, other.certificate_id) && Objects.equals(subject, other.subject)
 				&& Objects.equals(user, other.user);
 	}
 
 	@Override
 	public String toString() {
-		return "Certificate [id=" + id + ", user=" + user + ", subject=" + subject + "]";
+		return "Certificate [id=" + certificate_id + ", user=" + user + ", subject=" + subject + "]";
 	}
 }

@@ -58,6 +58,7 @@ public class UserService {
     	User userDB = userRepository.getById(user.getId());
     	userDB.setFirstName(firstName);
     	userDB.setLastName(lastName);
+    	userDB.setAge(age);
     	logger.info("Update user item:" + user + "to " + userDB);
     	userRepository.save(userDB);
     }
