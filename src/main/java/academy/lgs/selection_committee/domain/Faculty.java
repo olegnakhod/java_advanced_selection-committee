@@ -23,7 +23,7 @@ public class Faculty {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Integer faculty_id;
 	
 	@Column
 	private String name;
@@ -40,7 +40,7 @@ public class Faculty {
     private Set<Statment> statments = new HashSet<>();
 	
 	public Faculty(Integer id, String name, Integer numberOfSeats, Integer minimumPassingScore) {
-		this.id = id;
+		this.faculty_id = id;
 		this.name = name;
 		this.numberOfSeats = numberOfSeats;
 		this.minimumPassingScore = minimumPassingScore;
@@ -56,11 +56,11 @@ public class Faculty {
 	}
 
 	public Integer getId() {
-		return id;
+		return faculty_id;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.faculty_id = id;
 	}
 
 	public String getName() {
@@ -89,7 +89,7 @@ public class Faculty {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, minimumPassingScore, name, numberOfSeats);
+		return Objects.hash(faculty_id, minimumPassingScore, name, numberOfSeats);
 	}
 
 	@Override
@@ -101,13 +101,13 @@ public class Faculty {
 		if (getClass() != obj.getClass())
 			return false;
 		Faculty other = (Faculty) obj;
-		return Objects.equals(id, other.id) && Objects.equals(minimumPassingScore, other.minimumPassingScore)
+		return Objects.equals(faculty_id, other.faculty_id) && Objects.equals(minimumPassingScore, other.minimumPassingScore)
 				&& Objects.equals(name, other.name) && Objects.equals(numberOfSeats, other.numberOfSeats);
 	}
 
 	@Override
 	public String toString() {
-		return "Faculty [id=" + id + ", name=" + name + ", numberOfSeats=" + numberOfSeats + ", minimumPassingScore="
+		return "Faculty [id=" + faculty_id + ", name=" + name + ", numberOfSeats=" + numberOfSeats + ", minimumPassingScore="
 				+ minimumPassingScore + "]";
 	}	
 	
