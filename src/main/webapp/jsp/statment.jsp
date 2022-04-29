@@ -65,7 +65,7 @@
 				class="container d-flex justify-content-center align-self-start mt-5">
 				<c:choose>
 					<c:when test="${mode == 'VIEW_CANDIDATE'}">
-						<div class = "mt-3 col-10">
+						<div class = "d-flex justify-content-center mt-3 col-10">
 							<table class="table table-striped col-10">
 								<thead class="thead-dark ">
 									<tr>
@@ -90,7 +90,7 @@
 						</div>
 					</c:when>
 					<c:when test="${mode == 'VIEW_FACULTY'}">
-						<div class = "mt-3 col-10">
+						<div class = "d-flex justify-content-center mt-3 col-10">
 							<table class="table table-striped col-10">
 								<thead class="thead-dark">
 									<tr>
@@ -114,7 +114,7 @@
 						</div>
 					</c:when>
 					<c:when test="${mode == 'VIEW_APPLYES'}">
-						<div class = "mt-3 col-10">
+						<div class = "d-flex justify-content-center mt-3 col-10">
 							<table class="table table-striped col-10">
 								<thead class="thead-dark">
 									<tr>

@@ -1,13 +1,21 @@
 package academy.lgs.selection_committee.domain;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name = "subjects_grades")
@@ -15,7 +23,7 @@ public class SubjectsGrades {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Integer subjectsGrades_id;
 	
 	@Column(name = "first_subject")
 	private Integer firstSubject;
@@ -31,10 +39,15 @@ public class SubjectsGrades {
 	
 	@Column(name = "total_grades")
 	private Integer totalGrades;
-
+	
+    @OneToMany(mappedBy = "subject", cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE }, fetch = FetchType.EAGER, orphanRemoval = true)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Certificate> сertificats = new HashSet<>();
+	
 	public SubjectsGrades(Integer id, Integer firstSubject, Integer secondSubject, Integer thirdSubject,
 			Integer sumSchoolsCerticifate, Integer totalGrades) {
-		this.id = id;
+		this.subjectsGrades_id = id;
 		this.firstSubject = firstSubject;
 		this.secondSubject = secondSubject;
 		this.thirdSubject = thirdSubject;
@@ -57,11 +70,11 @@ public class SubjectsGrades {
 	}
 
 	public Integer getId() {
-		return id;
+		return subjectsGrades_id;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.subjectsGrades_id = id;
 	}
 
 	public Integer getFirstSubject() {
@@ -110,7 +123,7 @@ public class SubjectsGrades {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(firstSubject, id, secondSubject, sumSchoolsCerticifate, thirdSubject);
+		return Objects.hash(firstSubject, subjectsGrades_id, secondSubject, sumSchoolsCerticifate, thirdSubject);
 	}
 
 	@Override
@@ -122,7 +135,7 @@ public class SubjectsGrades {
 		if (getClass() != obj.getClass())
 			return false;
 		SubjectsGrades other = (SubjectsGrades) obj;
-		return Objects.equals(firstSubject, other.firstSubject) && Objects.equals(id, other.id)
+		return Objects.equals(firstSubject, other.firstSubject) && Objects.equals(subjectsGrades_id, other.subjectsGrades_id)
 				&& Objects.equals(secondSubject, other.secondSubject)
 				&& Objects.equals(sumSchoolsCerticifate, other.sumSchoolsCerticifate)
 				&& Objects.equals(thirdSubject, other.thirdSubject);
@@ -130,7 +143,7 @@ public class SubjectsGrades {
 
 	@Override
 	public String toString() {
-		return "Subject [id=" + id + ", firstSubject=" + firstSubject + ", secondSubject=" + secondSubject
+		return "Subject [id=" + subjectsGrades_id + ", firstSubject=" + firstSubject + ", secondSubject=" + secondSubject
 				+ ", thirdSubject=" + thirdSubject + ", sumSchoolsCerticifate=" + sumSchoolsCerticifate + "]";
 	}
 }

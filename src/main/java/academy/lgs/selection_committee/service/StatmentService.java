@@ -40,8 +40,7 @@ public class StatmentService {
 		logger.info("Save statment item:" + statment);
 		return statmentRepository.save(statment);
 	}
-	
-	
+		
 	public void deleteByUserId(Integer id) {
 		logger.info("Delete statment item by user id = " +id);
 		Statment statment = statmentRepository.findAll().stream().filter(x-> x.getUser().getId()==id).findFirst().get();
@@ -53,7 +52,6 @@ public class StatmentService {
 		Statment statment = statmentRepository.findAll().stream().filter(x-> x.getFaculty().getId()==id).findFirst().get();
 		statmentRepository.delete(statment);
 	}
-	
 	
 	public List<User> getUsersByFacultyId(Integer facultyId){
 		logger.info("Get users item by faculty id = " +facultyId);

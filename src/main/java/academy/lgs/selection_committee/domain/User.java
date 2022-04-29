@@ -1,23 +1,31 @@
 package academy.lgs.selection_committee.domain;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name = "users")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Integer user_id;
 	@Column(name = "first_name")
 	private String firstName;
 	@Column(name = "last_name")
@@ -35,9 +43,19 @@ public class User {
 
 	@Enumerated(EnumType.STRING)
 	private UserRole userRole;
-
+	
+    @OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE }, fetch = FetchType.EAGER, orphanRemoval = true)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Certificate> сertificats = new HashSet<>();
+    
+    @OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST,
+            CascadeType.MERGE }, fetch = FetchType.EAGER, orphanRemoval = true)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Statment> statments = new HashSet<>();
+	
 	public User(User user) {
-		this.id = user.id;
+		this.user_id = user.user_id;
 		this.firstName = user.firstName;
 		this.lastName = user.lastName;
 		this.age = user.age;
@@ -50,7 +68,7 @@ public class User {
 
 	public User(Integer id, String firstName, String lastName, Integer age, String email, String password,
 			String passwordConfirm, String encodeImage, UserRole userRole) {
-		this.id = id;
+		this.user_id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
@@ -77,11 +95,11 @@ public class User {
 	}
 
 	public Integer getId() {
-		return id;
+		return user_id;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.user_id = id;
 	}
 
 	public String getFirstName() {
@@ -150,7 +168,7 @@ public class User {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(age, email, firstName, id, lastName, password, userRole);
+		return Objects.hash(age, email, firstName, user_id, lastName, password, userRole);
 	}
 
 	@Override
@@ -163,14 +181,14 @@ public class User {
 			return false;
 		User other = (User) obj;
 		return Objects.equals(age, other.age) && Objects.equals(email, other.email)
-				&& Objects.equals(firstName, other.firstName) && Objects.equals(id, other.id)
+				&& Objects.equals(firstName, other.firstName) && Objects.equals(user_id, other.user_id)
 				&& Objects.equals(lastName, other.lastName) && Objects.equals(password, other.password)
 				&& userRole == other.userRole;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age + ", email="
+		return "User [id=" + user_id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age + ", email="
 				+ email + ", userRole=" + userRole + "]";
 	}
 
