@@ -1,6 +1,6 @@
 # Java advanced
 
-<h2>Другий проект</h2>
+<h2>Другий проект на курсі "Java Developer" у IT Logos Academy</h2>
 <h4>З використанням технологій:</h4>
 <h5>Spring MVC,Spring Data,Spring Security,JUntit4</h5>
 <ul>
